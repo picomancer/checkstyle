@@ -1,0 +1,8 @@
+#!/bin/sh
+
+set -e
+
+base=$(readlink -f $(dirname "$0"))/..
+
+java -cp "$base/target/dist/checkstyle.jar":$(find "$base/dep" -name "*.jar" -print0 | tr '\0' ':') com.puppycrawl.tools.checkstyle.Main "$@"
+

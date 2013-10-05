@@ -16,3 +16,6 @@ checkstyle.iml
 
 #Temp files
 *~
+
+#Local copies of build dependencies
+/dep

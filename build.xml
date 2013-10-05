@@ -13,6 +13,37 @@
     <pathelement location="${target.dir}/checkstyle-${version}-all.jar"/>
   </path>
 
+  <target name="compile">
+    <mkdir dir="target/class" />
+    <javac destdir="target/class" includeantruntime="true"
+           encoding="iso-8859-1" target="1.5"
+    >
+       <classpath>
+          <pathelement location="dep/antlr.jar" />
+          <pathelement location="dep/commons-beanutils.jar" />
+          <pathelement location="dep/commons-cli.jar" />
+          <pathelement location="dep/commons-logging.jar" />
+          <pathelement location="dep/google-collections.jar" />
+          <pathelement location="dep/jsr305.jar" />
+       </classpath>
+       <src path="src/checkstyle" />
+       <src path="target/src" />
+    </javac>
+
+    <copy todir="target/class">
+      <fileset dir="src/checkstyle">
+        <include name="**/*.dtd"/>
+        <include name="**/*.xml"/>
+        <include name="**/*.properties"/>
+      </fileset>
+    </copy>
+  </target>
+
+  <target name="jar" depends="compile">
+    <mkdir dir="target/dist" />
+    <jar jarfile="target/dist/checkstyle.jar" basedir="target/class" />
+  </target>
+
   <target name="checkstyle.checkstyle"
           description="Runs checkstyle against it's own sources">
     <taskdef name="checkstyle"
